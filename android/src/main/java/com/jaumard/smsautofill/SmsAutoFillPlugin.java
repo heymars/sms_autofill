@@ -55,6 +55,7 @@ public class SmsAutoFillPlugin implements FlutterPlugin, ActivityAware, MethodCa
     private Result pendingHintResult;
     private MethodChannel channel;
     private SmsBroadcastReceiver broadcastReceiver;
+    private boolean hasReplySent = true;
     private final PluginRegistry.ActivityResultListener activityResultListener = new PluginRegistry.ActivityResultListener() {
 
         @Override
@@ -63,7 +64,10 @@ public class SmsAutoFillPlugin implements FlutterPlugin, ActivityAware, MethodCa
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     Credential credential = data.getParcelableExtra(Credential.EXTRA_KEY);
                     final String phoneNumber = credential.getId();
-                    pendingHintResult.success(phoneNumber);
+                    if (hasReplySent) {
+                        hasReplySent = false;
+                        pendingHintResult.success(phoneNumber);
+                    }
                 } else {
                     pendingHintResult.success(null);
                 }
