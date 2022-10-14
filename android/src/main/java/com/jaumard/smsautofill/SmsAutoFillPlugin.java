@@ -70,8 +70,9 @@ public class SmsAutoFillPlugin implements FlutterPlugin, ActivityAware, MethodCa
                         pendingHintResult.success(null);
                     }
                     return true;
-                }
-            } catch (Exception e) {
+                } catch (Exception e) {
+
+            }
             }
             return false;
         }
