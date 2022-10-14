@@ -59,20 +59,18 @@ public class SmsAutoFillPlugin implements FlutterPlugin, ActivityAware, MethodCa
 
         @Override
         public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
-            try {
-                if (requestCode == SmsAutoFillPlugin.PHONE_HINT_REQUEST && pendingHintResult != null) {
+            if (requestCode == SmsAutoFillPlugin.PHONE_HINT_REQUEST && pendingHintResult != null) {
+                try {
                     if (resultCode == Activity.RESULT_OK && data != null) {
                         Credential credential = data.getParcelableExtra(Credential.EXTRA_KEY);
                         final String phoneNumber = credential.getId();
                         pendingHintResult.success(phoneNumber);
-                        }
                     } else {
                         pendingHintResult.success(null);
                     }
-                    return true;
-                } catch (Exception e) {
-
-            }
+                } catch (Exception e){
+                }
+                return true;
             }
             return false;
         }
